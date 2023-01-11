@@ -9,14 +9,16 @@
         Il y a {{ingredients.getTotalItemCount }} ingrédients 
         </div>
 
-    <table class="table table-hover">
+    <table class="table table-hover ">
         <thead>
-            <tr>
+            <tr class="table-dark">
                 <th>Id</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>CreatedAt</th>
                 <th>actions</th>
+                <th>Show</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +30,8 @@
                 <td>{{ ingredient.price }}</td>
                 <td>{{ ingredient.createdAt ? ingredient.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_ingredient_show', {'id': ingredient.id}) }}">show</a>
-                    <a href="{{ path('app_ingredient_edit', {'id': ingredient.id}) }}">edit</a>
+                    <a class="btn btn-info"href="{{ path('app_ingredient_show', {'id': ingredient.id}) }}">show</a> </td>
+                 <td>   <a class="btn btn-warning"href="{{ path('app_ingredient_edit', {'id': ingredient.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -42,7 +44,7 @@
 <div class="navigation">
     {{ knp_pagination_render(ingredients) }}
 </div>
-    <a href="{{ path('app_ingredient_new') }}">Create new</a>
+    <a class="btn btn-primary" href="{{ path('app_ingredient_new') }}">Create new</a>
     {% else %}
     <h4> Il n'y a pas d'ingrédients </h4>
     {% endif %}
