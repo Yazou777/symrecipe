@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ingredient index{% endblock %}
+
+{% block body %}
+    <h1>Ingredient index</h1>
+    {% if not ingredients.items is same as([]) %}
+    <div class="count mt-4">
+        Il y a {{ingredients.getTotalItemCount }} ingrédients 
+        </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ingredient in ingredients %}
+               <tr class="table-secondary">
+      <th scope="row">Primary</th>
+                <td>{{ ingredient.id }}</td>
+                <td>{{ ingredient.name }}</td>
+                <td>{{ ingredient.price }}</td>
+                <td>{{ ingredient.createdAt ? ingredient.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_ingredient_show', {'id': ingredient.id}) }}">show</a>
+                    <a href="{{ path('app_ingredient_edit', {'id': ingredient.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="navigation">
+    {{ knp_pagination_render(ingredients) }}
+</div>
+    <a href="{{ path('app_ingredient_new') }}">Create new</a>
+    {% else %}
+    <h4> Il n'y a pas d'ingrédients </h4>
+    {% endif %}
+{% endblock %}

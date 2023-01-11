@@ -17,18 +17,15 @@ class Ingredient
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-   
     #[Assert\Length(min: 2, max: 50)]
     private ?string $name = null;
 
     #[ORM\Column]
-    
     #[Assert\Positive]
     #[Assert\LessThan(200)]
     private ?float $price = null;
 
     #[ORM\Column]
-   
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
@@ -76,4 +73,6 @@ class Ingredient
 
         return $this;
     }
+
+
 }
