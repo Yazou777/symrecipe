@@ -28,6 +28,20 @@ class IngredientController extends AbstractController
         ]);
     }
 
+    #[Route('/myIngredient', name: 'app_my_ingredient_index', methods: ['GET'])]
+    public function myindex(IngredientRepository $ingredientRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+
+    $ingredients = $paginator->paginate(
+        $ingredientRepository->findBy(['user' => $this->getUser()]), /* query NOT result */
+        $request->query->getInt('page', 1), /*page number*/
+        10 /*limit per page*/
+    );
+        return $this->render('ingredient/index.html.twig', [
+            'ingredients' => $ingredients,
+        ]);
+    }
+
     #[Route('/new', name: 'app_ingredient_new', methods: ['GET', 'POST'])]
     public function new(Request $request, IngredientRepository $ingredientRepository): Response
     {
@@ -36,7 +50,10 @@ class IngredientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $ingredient->setUser($this->getUser());
             $ingredientRepository->save($ingredient, true);
+            
+            
 
             $this->addFlash(
                 'success',
