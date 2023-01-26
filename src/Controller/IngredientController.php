@@ -9,12 +9,15 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/ingredient')]
 class IngredientController extends AbstractController
 {
     #[Route('/', name: 'app_ingredient_index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(IngredientRepository $ingredientRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
@@ -29,6 +32,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/myIngredient', name: 'app_my_ingredient_index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function myindex(IngredientRepository $ingredientRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
@@ -43,6 +47,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/new', name: 'app_ingredient_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, IngredientRepository $ingredientRepository): Response
     {
         $ingredient = new Ingredient();
@@ -78,6 +83,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_ingredient_edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER') and user === ingredient.getUser()")]
     public function edit(Request $request, Ingredient $ingredient, IngredientRepository $ingredientRepository): Response
     {
         $form = $this->createForm(IngredientType::class, $ingredient);
