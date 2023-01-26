@@ -44,11 +44,12 @@ class RecipeType extends AbstractType
             ->add('createdAt')
             ->add('updateAt')
             ->add('ingredients', EntityType::class, [
-                'class' => Ingredient::class,
+                
+                'class' => Ingredient::class ,
                 'query_builder' => function (IngredientRepository $r) {
                     return $r->createQueryBuilder('i')
                         ->orderBy('i.name', 'ASC');
-                },
+                }, 
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,

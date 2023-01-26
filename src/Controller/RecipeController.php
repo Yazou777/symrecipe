@@ -27,6 +27,19 @@ class RecipeController extends AbstractController
         ]);
     }
 
+    #[Route('/myrecipes', name: 'app_my_recipe_index', methods: ['GET'])]
+    public function myindex(RecipeRepository $recipeRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $recipes = $paginator->paginate(
+            $recipeRepository->findBy(['user' => $this->getUser()]),  
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('recipe/index.html.twig', [
+            'recipes' => $recipes,
+        ]);
+    }
+
     #[Route('/new', name: 'app_recipe_new', methods: ['GET', 'POST'])]
     public function new(Request $request, RecipeRepository $recipeRepository): Response
     {
@@ -35,6 +48,7 @@ class RecipeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setUser($this->getUser());
             $recipeRepository->save($recipe, true);
 
             return $this->redirectToRoute('app_recipe_index', [], Response::HTTP_SEE_OTHER);
