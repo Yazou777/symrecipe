@@ -27,6 +27,11 @@
                 <th>Difficulty</th>
                 <td>{{ recipe.difficulty }}</td>
             </tr>
+                <th>Ingredients</th>
+                {% for ingredient in recipe.ingredients %}
+                <td class="badge bg-primary ">{{ingredient.name }}</td>
+                {% endfor %}
+            </tr>
             <tr>
                 <th>Description</th>
                 <td>{{ recipe.description }}</td>
