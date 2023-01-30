@@ -246,4 +246,9 @@ class Recipe
 
         return $this;
     }
+
+    public function getIsPublic(): ?bool
+    {
+        return $this->isPublic;
+    }
 }
