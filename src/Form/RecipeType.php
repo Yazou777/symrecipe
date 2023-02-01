@@ -7,6 +7,7 @@ use App\Entity\Ingredient;
 use App\Repository\IngredientRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,6 +42,8 @@ class RecipeType extends AbstractType
             ->add('description')
             ->add('price')
             ->add('isFavorite')
+            ->add('isPublic')
+            ->add('imageFile', VichImageType::class)
             ->add('createdAt')
             ->add('updateAt')
             ->add('ingredients', EntityType::class, [

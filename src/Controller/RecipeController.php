@@ -80,7 +80,7 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recipe_show', methods: ['GET'])]
-    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true")]
+    #[Security("is_granted('ROLE_USER') and recipe.getIsPublic() === true || user === recipe.getUser()")]
     //#[Security("is_granted('ROLE_USER') and user.getId() > 23 ")]
     public function show(Recipe $recipe): Response
     {

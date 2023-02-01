@@ -52,8 +52,14 @@
                 <th>UpdateAt</th>
                 <td>{{ recipe.updateAt ? recipe.updateAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            
+         
         </tbody>
     </table>
+
+       <div>
+            <img style ="max-width: 500px;" src="{{ vich_uploader_asset(recipe, 'imageFile') }}">
+            </div>
 
     <a href="{{ path('app_recipe_index') }}">back to list</a>
 
